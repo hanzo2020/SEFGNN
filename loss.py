@@ -51,20 +51,19 @@ class UnionLoss(nn.Module):
         self.func = mmd
         self.start_epoch = start_epoch
 
-    def forward(self, inputs, targets, x_list, weight, epoch):#MuGTN的loss, 复杂的一笔,其实可以用对比学习替代？
+    def forward(self, inputs, targets, x_list, weight, epoch):
         BCE_loss = F.binary_cross_entropy(inputs, targets, reduction='mean')
 
-        pos_indices = torch.nonzero(targets).squeeze()#取出标签是1的label，在这里print看看训练时候是不是一直用这128个
-        neg_indices = torch.nonzero(targets == 0).squeeze()#取出标签是0的label
+        pos_indices = torch.nonzero(targets).squeeze()
+        neg_indices = torch.nonzero(targets == 0).squeeze()
         pos_list, neg_list = [], []
-        for i in range(len(x_list)):#选出来pos和neg分别对特征
+        for i in range(len(x_list)):
             pos_list.append(torch.index_select(x_list[i], dim=0, index=pos_indices))
             neg_list.append(torch.index_select(x_list[i], dim=0, index=neg_indices))
 
-        if epoch >= self.start_epoch:#大于的时候才有这个狗比loss，weight也是这里用的
+        if epoch >= self.start_epoch:
             pos_loss = 0 if pos_indices.numel() == 0 else distance(pos_list, weight, func=self.func,)
             neg_loss = 0 if neg_indices.numel() == 0 else distance(neg_list, weight, func=self.func,)
         else: pos_loss, neg_loss = 0., 0.
-        Union_loss = BCE_loss + self.pos_lambda * pos_loss - self.neg_lambda * neg_loss#为什么pos是加neg是减
-
+        Union_loss = BCE_loss + self.pos_lambda * pos_loss - self.neg_lambda * neg_loss
         return Union_loss.sum()

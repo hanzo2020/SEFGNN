@@ -30,22 +30,20 @@ def timer(func):
     return wrapper
 
 def paint_roc(y_true, y_score):
-    # 计算ROC曲线数据
+
     fpr, tpr, thresholds = roc_curve(y_true, y_score)
     roc_auc = auc(fpr, tpr)
-    # 绘制ROC曲线
     plt.figure(figsize=(8, 6))
     plt.plot(fpr, tpr, color='b', lw=2, label=f'ROC curve (AUC = {roc_auc:.4f})')
-    plt.plot([0, 1], [0, 1], color='gray', lw=2, linestyle='--')  # 随机分类器的对角线
+    plt.plot([0, 1], [0, 1], color='gray', lw=2, linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic (ROC) Curve')
     plt.legend(loc="lower right")
-    # 保存为文件，修改文件名和路径
-    plt.savefig("roc_curve.png", dpi=300)  # 保存为PNG文件，可以选择其他格式如jpg, pdf等
-    plt.close()  # 关闭图形，避免占用内存
+    plt.savefig("roc_curve.png", dpi=300)
+    plt.close()
 
 def calculate_metrics(y_true, y_pred, y_score):
     acc = accuracy_score(y_true, y_pred)

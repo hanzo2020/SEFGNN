@@ -150,7 +150,7 @@ class SEFMGNN(t.nn.Module):
         self.l2_bias = 0
         self.epsilon = 1e-5
         self.degrees_weights = nn.Parameter(torch.ones(10))
-        self.alpha = nn.Parameter(torch.tensor(0.9))  # 假如权重不固定
+        self.alpha = nn.Parameter(torch.tensor(0.9))
 
         for _ in range(num_ppi):
             self.convs.append(

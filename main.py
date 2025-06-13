@@ -401,20 +401,20 @@ class MultiPPI_Encoder():
         pos_lambda = self.args['pos_lambda']
         neg_lambda = self.args['neg_lambda']
         best_info = {
-            'epoch': 0,  # 最佳 F1 分数对应的 epoch
-            'train_f1': 0.0,  # 最佳训练集 F1 分数
-            'valid_f1': 0.0,  # 最佳验证集 F1 分数
-            'test_f1': 0.0,  # 最佳测试集 F1 分数
-            'train_acc': 0.0,  # 最佳训练集准确率
-            'valid_acc': 0.0,  # 最佳验证集准确率
-            'test_acc': 0.0,  # 最佳测试集准确率
-            'train_auc': 0.0,  # 最佳训练集 AUC
-            'val_auc': 0.0,  # 最佳验证集 AUC
-            'test_auc': 0.0,  # 最佳测试集 AUC
-            'train_auprc': 0.0,  # 最佳训练集 AUPRC
-            'valid_auprc': 0.0,  # 最佳验证集 AUPRC
-            'test_auprc': 0.0,  # 最佳测试集 AUPRC
-            'test_confusion_matrix': None,  # 最佳测试集混淆矩阵
+            'epoch': 0,
+            'train_f1': 0.0,
+            'valid_f1': 0.0,
+            'test_f1': 0.0,
+            'train_acc': 0.0,
+            'valid_acc': 0.0,
+            'test_acc': 0.0,
+            'train_auc': 0.0,
+            'val_auc': 0.0,
+            'test_auc': 0.0,
+            'train_auprc': 0.0,
+            'valid_auprc': 0.0,
+            'test_auprc': 0.0,
+            'test_confusion_matrix': None,
         }
         for epoch in range(self.args['num_epochs']):
             self.args['pos_lambda'] = 0. if epoch < 100 else pos_lambda
